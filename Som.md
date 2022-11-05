@@ -20,3 +20,6 @@ Each node in the map space is associated with a "weight" vector, which is the po
 consists in moving weight vectors toward the input data (reducing a distance metric such as Euclidean distance) without spoiling the topology induced from the map space.
 After training, the map can be used to classify additional observations for the input space by finding the node with the closest weight vector (smallest distance metric)
 to the input space vector.
+
+The goal of learning in the self-organizing map is to cause different parts of the network to respond similarly to certain input patterns. This is partly motivated by 
+how visual, auditory or other sensory information is handled in separate parts of the cerebral cortex in the human brain.
