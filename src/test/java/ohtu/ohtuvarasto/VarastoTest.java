@@ -2,7 +2,6 @@ package ohtu.ohtuvarasto;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,6 +62,55 @@ public class VarastoTest {
 
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void eiVoiLisätäNegatiivista() {
+        varasto.lisaaVarastoon(-10);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkusaldonVoiAsettaa() {
+        varasto = new Varasto(10, 8);
+        assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test 
+    public void saldoEiMeneMiinukselle() {
+        varasto = new Varasto(10, 4);
+        varasto.otaVarastosta(5);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void tilavuusPositiivinen() {
+        varasto = new Varasto(-5);
+        assertEquals(0, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkusaldoEiYlitäTilavuutta() {
+        varasto = new Varasto(5, 6);
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void saldoEiYlitätilavuutta() {
+        varasto.lisaaVarastoon(11);
+        assertEquals(10, varasto.getSaldo());
+    }
+    
+    @Test
+    public void annetaanMaxSaldonVerran() {
+        varasto = new Varasto(10, 5);
+        double saatuMaara = varasto.otaVarastosta(7);
+        assertEquals(5, saatuMaara, vertailuTarkkuus);
+    }
+    
+    @Test
+    public void merkkijonoesitysOikein() {
+        assertEquals("saldo = 0.0, vielä tilaa 10.0", "saldo = " + varasto.getSaldo() + ", vielä tilaa " + varasto.paljonkoMahtuu());
     }
 
 }
