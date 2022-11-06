@@ -98,7 +98,7 @@ public class VarastoTest {
     @Test
     public void saldoEiYlitätilavuutta() {
         varasto.lisaaVarastoon(11);
-        assertEquals(10, varasto.getSaldo());
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
     }
     
     @Test
