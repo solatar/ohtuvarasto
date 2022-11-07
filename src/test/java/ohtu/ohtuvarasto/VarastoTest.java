@@ -1,13 +1,9 @@
 package ohtu.ohtuvarasto;
 
-import org.junit.*;
-import static org.junit.Assert.*;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import ohtu.ohtuvarasto.Varasto;
 
 public class VarastoTest {
 
@@ -32,7 +28,6 @@ public class VarastoTest {
     @Test
     public void lisaysLisaaSaldoa() {
         varasto.lisaaVarastoon(8);
-
         // saldon pitäisi olla sama kun lisätty määrä
         assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
     }
@@ -48,9 +43,7 @@ public class VarastoTest {
     @Test
     public void ottaminenPalauttaaOikeanMaaran() {
         varasto.lisaaVarastoon(8);
-
         double saatuMaara = varasto.otaVarastosta(2);
-
         assertEquals(2, saatuMaara, vertailuTarkkuus);
     }
 
@@ -69,11 +62,24 @@ public class VarastoTest {
         varasto.lisaaVarastoon(-10);
         assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
     }
+
+    @Test
+    public void eiVoiOttaaNegatiivista() {
+        varasto.otaVarastosta(-3);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }    
+    
     
     @Test
     public void alkusaldonVoiAsettaa() {
         varasto = new Varasto(10, 8);
         assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkusaldoPositiivinen() {
+        varasto = new Varasto(10, -8);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
     }
     
     @Test 
@@ -85,8 +91,14 @@ public class VarastoTest {
     
     @Test
     public void tilavuusPositiivinen() {
-        varasto = new Varasto(-5);
-        assertEquals(0, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+        varasto = new Varasto(-3);
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void tilavuusPositiivinen2() {
+        varasto = new Varasto(-5, 0);
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
     }
     
     @Test
@@ -109,8 +121,7 @@ public class VarastoTest {
     }
     
     @Test
-    public void merkkijonoesitysOikein() {
-        assertEquals("saldo = 0.0, vielä tilaa 10.0", "saldo = " + varasto.getSaldo() + ", vielä tilaa " + varasto.paljonkoMahtuu());
+    public void merkkijonoesitysOikein() {        
+        assertEquals("saldo = 0.0, vielä tilaa 10.0", varasto.toString());
     }
-
 }
